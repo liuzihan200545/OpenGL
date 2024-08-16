@@ -148,11 +148,13 @@
   <ItemGroup>
     <ClInclude Include="camera.h" />
     <ClInclude Include="haed.h" />
+    <ClInclude Include="headers.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="shaderClass.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="stb_truetype.h" />
+    <ClInclude Include="structs.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="VAO.h" />
   </ItemGroup>
@@ -166,6 +168,8 @@
   <ItemGroup>
     <Content Include="shader\camera.frag" />
     <Content Include="shader\camera.vert" />
+    <Content Include="shader\light.frag" />
+    <Content Include="shader\light.vert" />
     <Content Include="shader\texture.frag" />
     <Content Include="shader\texture.vert" />
   </ItemGroup>
