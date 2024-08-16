@@ -104,6 +104,7 @@ Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0, 0, 2));
 
 int main()
 {
+    camera.setCameraSpeed(0.01f);
     loadMesh("objects/cylinder.obj");
 
     print(vertices_load.size());
@@ -125,7 +126,7 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
-
+        
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         camera.Inputs(window);
         shader.use();
