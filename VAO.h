@@ -1,7 +1,6 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <vector>
 
 using namespace std;
@@ -47,7 +46,7 @@ public:
         indices_size = indices.size();
     }
 
-    void draw()
+    void draw() const 
     {
         glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, indices_size , GL_UNSIGNED_INT, 0);
