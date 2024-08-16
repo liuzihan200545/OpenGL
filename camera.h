@@ -30,6 +30,8 @@ public:
 	float near;
 	float far;
 
+	glm::mat4 project_result;
+
 	Camera(int width, int height, glm::vec3 position,float FOVdeg, float nearPlane, float farPlane);
 
 	// Updates and exports the camera matrix to the Vertex Shader
@@ -39,6 +41,6 @@ public:
 
 	void setCameraSpeed(float _speed);
 	
-
+	void updataProperties(float FOVdeg, float nearPlane, float farPlane);
 };
 

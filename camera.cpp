@@ -10,9 +10,9 @@ glm::mat4 Camera::Matrix()
 
 	view = glm::lookAt(Position, Position + Orientation, Up);
 
-	projection = glm::perspective(glm::radians(fov), (float)width / height, near, far);
+	project_result = glm::perspective(glm::radians(fov), (float)width / height, near, far);
 
-	return projection * view;
+	return project_result * view;
 }
 
 void Camera::Inputs(GLFWwindow* window)
@@ -100,4 +100,12 @@ void Camera::Inputs(GLFWwindow* window)
 void Camera::setCameraSpeed(float _speed)
 {
 	this->normal_speed = _speed;
+}
+
+void Camera::updataProperties(float FOVdeg, float nearPlane, float farPlane)
+{
+	fov = FOVdeg;
+	near = nearPlane;
+	far = farPlane;
+	project_result = glm::perspective(glm::radians(fov), (float)width / height, near, far);
 }
