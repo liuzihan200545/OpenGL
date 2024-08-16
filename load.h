@@ -7,6 +7,7 @@
 #include <vector>
 #include "utils.h"
 #include "texture.h"
+#include "VAO.h"
 
 std::vector<float> vertices_load;
 std::vector<unsigned int> indices_load;
@@ -17,10 +18,6 @@ do\
 {\
 std::cout << x << '\n';\
 }while(0)
-
-class Mesh
-{
-};
 
 bool loadMesh(const std::string& pFile)
 {
@@ -126,27 +123,14 @@ Texture load_texture(const char* pFile)
     for(int i = 0;i < numMeshes ; i++)
     {
         auto mesh = meshes[i];
-        if(mesh->mMaterialIndex > 0)
-        {
-            aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-            for(unsigned int i = 0; i < material->GetTextureCount(aiTextureType_DIFFUSE); i++)
-            {
-                aiString str;
-                material->GetTexture(aiTextureType_DIFFUSE, i, &str);
-                //ÌùÍ¼Â·¾¶
-                std::string dic = std::string(str.C_Str());
-                auto texture = Texture(dic.c_str());
-                return texture;          
-            }               
-        }
-    }
-    
-    
-    for(int i = 0 ;i < scene->mNumMaterials; i++)
-    {
-        /*print(scene->mMaterials[i]->GetName().C_Str());*/
-        
-        
-        //print(scene->mMaterials[i])
+        aiString str;
+        aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+        str = "";
+        //material->GetTexture(aiTextureType_DIFFUSE, i, &str);
+        material->GetTexture(aiTextureType_DIFFUSE,0,&str);
+        //ÌùÍ¼Â·¾¶
+        std::string dic = std::string(str.C_Str());
+        auto texture = Texture(dic.c_str());
+        return texture;   
     }
 }

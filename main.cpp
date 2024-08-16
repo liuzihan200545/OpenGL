@@ -113,8 +113,8 @@ int main()
     auto window = GLInit();
     glEnable(GL_DEPTH_TEST);
 
-    loadMesh("objects/cube.obj");
-    auto texture1 = load_texture("objects/cube.obj");
+    loadMesh("objects/cylinder.obj");
+    auto texture1 = load_texture("objects/cylinder.obj");
     texture1.Bind(0);
 
     auto shader = Shader(texture_shaders);
