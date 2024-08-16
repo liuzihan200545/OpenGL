@@ -5,9 +5,12 @@
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
 #include <vector>
+#include "utils.h"
+#include "texture.h"
 
 std::vector<float> vertices_load;
 std::vector<unsigned int> indices_load;
+std::vector<Texture> textures;
 
 #define print(x)\
 do\
@@ -40,14 +43,16 @@ bool loadMesh(const std::string& pFile)
     }
     else
     {
-        print("success");
+        print("success_mesh");
     }
+
+    utils::printt("There is {} meshes in the model.",scene->mNumMeshes);
 
     auto meshes = scene->mMeshes;
     auto numMeshes = scene->mNumMeshes;
 
-    print(numMeshes);
-    print(meshes[0]->mNumVertices);
+    /*print(numMeshes);
+    print(meshes[0]->mNumVertices);*/
 
     for (unsigned int i = 0; i < numMeshes; i++)
     {
@@ -92,4 +97,56 @@ bool loadMesh(const std::string& pFile)
     return true;
 }
 
+Texture load_texture(const char* pFile)
+{
+    // Create an instance of the Importer class
+    Assimp::Importer importer;
 
+    // And have it read the given file with some example postprocessing
+    // Usually - if speed is not the most important aspect for you - you'll
+    // probably to request more postprocessing than we do in this example.
+    const aiScene* scene = importer.ReadFile(pFile,
+                                             aiProcess_CalcTangentSpace |
+                                             aiProcess_Triangulate |
+                                             aiProcess_JoinIdenticalVertices |
+                                             aiProcess_SortByPType);
+
+    if (nullptr == scene)
+    {
+        print(importer.GetErrorString());
+    }
+    else
+    {
+        print("success_texture");
+    }
+
+    auto meshes = scene->mMeshes;
+    auto numMeshes = scene->mNumMeshes;
+
+    for(int i = 0;i < numMeshes ; i++)
+    {
+        auto mesh = meshes[i];
+        if(mesh->mMaterialIndex > 0)
+        {
+            aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+            for(unsigned int i = 0; i < material->GetTextureCount(aiTextureType_DIFFUSE); i++)
+            {
+                aiString str;
+                material->GetTexture(aiTextureType_DIFFUSE, i, &str);
+                //ÌùÍ¼Â·¾¶
+                std::string dic = std::string(str.C_Str());
+                auto texture = Texture(dic.c_str());
+                return texture;          
+            }               
+        }
+    }
+    
+    
+    for(int i = 0 ;i < scene->mNumMaterials; i++)
+    {
+        /*print(scene->mMaterials[i]->GetName().C_Str());*/
+        
+        
+        //print(scene->mMaterials[i])
+    }
+}

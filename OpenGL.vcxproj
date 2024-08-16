@@ -114,6 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,6 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,6 +159,7 @@
     <ClInclude Include="stb_truetype.h" />
     <ClInclude Include="structs.h" />
     <ClInclude Include="texture.h" />
+    <ClInclude Include="utils.h" />
     <ClInclude Include="VAO.h" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +172,7 @@
   <ItemGroup>
     <Content Include="objects\cylinder.mtl" />
     <Content Include="objects\cylinder.obj" />
+    <Content Include="objects\vepley.obj" />
     <Content Include="shader\camera.frag" />
     <Content Include="shader\camera.vert" />
     <Content Include="shader\light.frag" />

@@ -30,15 +30,6 @@
     <ClCompile Include="VAO.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="VBO.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="EBO.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="shaderClass.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -48,12 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VAO.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="VBO.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="EBO.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="shaderClass.h">
@@ -78,6 +63,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="headers.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="load.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="structs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

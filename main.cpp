@@ -105,13 +105,17 @@ Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0, 0, 2),45,0.1,100);
 int main()
 {
     camera.setCameraSpeed(0.01f);
-    loadMesh("objects/cylinder.obj");
+    
 
     print(vertices_load.size());
     print(indices_load.size());
     
     auto window = GLInit();
     glEnable(GL_DEPTH_TEST);
+
+    loadMesh("objects/cube.obj");
+    auto texture1 = load_texture("objects/cube.obj");
+    texture1.Bind(0);
 
     auto shader = Shader(texture_shaders);
     auto vao = VAO(vertices, indices, attribs);
@@ -120,7 +124,7 @@ int main()
     auto vao_light = VAO(vertices_load,indices_load,attribs2);
     auto shader_light = Shader(light_shaders);
     
-    texture.Bind(0);
+    //texture.Bind(0);
     shader.setInt("t", 0);
 
     while (!glfwWindowShouldClose(window))
@@ -135,11 +139,11 @@ int main()
         
         vao.draw();
 
-        shader_light.use();
-        shader_light.setMat4("camera_info", camera.Matrix());
+        //shader_light.use();
+        //shader_light.setMat4("camera_info", camera.Matrix());
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model,glm::vec3(0,5,0));
-        shader_light.setMat4("model",model);
+        //shader_light.setMat4("model",model);
         vao_light.draw();
 
         glfwPollEvents();
