@@ -166,6 +166,8 @@
   <ItemGroup>
     <Content Include="shader\camera.frag" />
     <Content Include="shader\camera.vert" />
+    <Content Include="shader\texture.frag" />
+    <Content Include="shader\texture.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

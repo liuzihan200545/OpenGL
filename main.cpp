@@ -1,24 +1,28 @@
 ﻿#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-
+#define STB_IMAGE_IMPLEMENTATION
+#include "texture.h"
 #include "VAO.h"
 #include "shaderClass.h"
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+/*#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>*/
 #include "camera.h"
 #include <vector>
 
+
+
 #define camera_shaders "shader/camera.vert","shader/camera.frag"
+#define texture_shaders "shader/texture.vert","shader/texture.frag"
 
 std::vector<float> vertices =
-{ //     COORDINATES         /        COLORS      
-    -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,
-    -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,
-     0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,
-     0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,
-     0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f
+{ //     COORDINATES         /        COLORS         // UV
+    -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
+    -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
+     0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
+     0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
+     0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	2.5f, 5.0f
 };
 
 // Indices for vertices order
@@ -68,8 +72,11 @@ int main()
     auto window = GLInit();
     glEnable(GL_DEPTH_TEST);
 
-    auto shader = Shader(camera_shaders);
+    auto shader = Shader(texture_shaders);
     auto vao = VAO(vertices,indices);
+    auto texture = Texture("textures/squere.png");
+    texture.Bind(0);
+    shader.setInt("t",0);
 
     while(!glfwWindowShouldClose(window))
     {

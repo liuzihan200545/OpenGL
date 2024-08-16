@@ -8,7 +8,7 @@
 #include <iostream>
 
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+//#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 class Shader
@@ -45,7 +45,7 @@ public:
         }
         catch (std::ifstream::failure& e)
         {
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << std::endl;
+            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << '\n';
         }
         const char* vShaderCode = vertexCode.c_str();
         const char * fShaderCode = fragmentCode.c_str();
@@ -95,14 +95,23 @@ public:
     }
 
     void setMat4(const std::string &name, glm::mat4 trans) const {
-        unsigned int transformLoc = glGetUniformLocation(ID, name.c_str());
+        int transformLoc = glGetUniformLocation(ID, name.c_str());
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+    }
+
+    void setVec3(const std::string &name, glm::vec3 vector) const {
+        int vectorLoc = glGetUniformLocation(ID, name.c_str());
+        glUniform3fv(vectorLoc, 1, glm::value_ptr(vector));
+    }
+
+    void setVec3(const std::string &name, float x, float y, float z) const {
+        Shader::setVec3(name,glm::vec3(x,y,z));
     }
 
 private:
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------
-    void checkCompileErrors(unsigned int shader, std::string type)
+    void checkCompileErrors(unsigned int shader,const std::string &type)
     {
         int success;
         char infoLog[1024];
@@ -112,7 +121,7 @@ private:
             if (!success)
             {
                 glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+                std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << '\n';
             }
         }
         else
@@ -121,7 +130,7 @@ private:
             if (!success)
             {
                 glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+                std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << '\n';
             }
         }
     }

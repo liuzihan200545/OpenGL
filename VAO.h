@@ -29,16 +29,21 @@ public:
 
         // 设置顶点属性指针
         // 位置属性
-        glVertexArrayVertexBuffer(vao, 0, vbo, 0, 6 * sizeof(GLfloat));
+        glVertexArrayVertexBuffer(vao, 0, vbo, 0, 8 * sizeof(GLfloat));
         glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
         glVertexArrayAttribBinding(vao, 0, 0);
         glEnableVertexArrayAttrib(vao, 0);
 
         // 颜色属性
-        glVertexArrayVertexBuffer(vao, 1, vbo, 3 * sizeof(GLfloat), 6 * sizeof(GLfloat));
+        glVertexArrayVertexBuffer(vao, 1, vbo, 3 * sizeof(GLfloat), 8 * sizeof(GLfloat));
         glVertexArrayAttribFormat(vao, 1, 3, GL_FLOAT, GL_FALSE, 0);
         glVertexArrayAttribBinding(vao, 1, 1);
         glEnableVertexArrayAttrib(vao, 1);
+
+        glVertexArrayVertexBuffer(vao, 2, vbo, 6 * sizeof(GLfloat), 8 * sizeof(GLfloat));
+        glVertexArrayAttribFormat(vao, 2, 2, GL_FLOAT, GL_FALSE, 0);
+        glVertexArrayAttribBinding(vao, 2, 2);
+        glEnableVertexArrayAttrib(vao, 2);
 
         // 绑定 EBO 到 VAO
         glVertexArrayElementBuffer(vao, ebo);
