@@ -149,6 +149,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="haed.h" />
     <ClInclude Include="headers.hpp" />
+    <ClInclude Include="load.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="shaderClass.h" />
     <ClInclude Include="stb_image.h" />
@@ -166,6 +167,8 @@
     <Image Include="textures\squere.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="objects\cylinder.mtl" />
+    <Content Include="objects\cylinder.obj" />
     <Content Include="shader\camera.frag" />
     <Content Include="shader\camera.vert" />
     <Content Include="shader\light.frag" />

@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>*/
 #include "camera.h"
 #include <vector>
+#include "load.h"
 
 #define camera_shaders "shader/camera.vert","shader/camera.frag"
 #define texture_shaders "shader/texture.vert","shader/texture.frag"
@@ -103,6 +104,8 @@ Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0, 0, 2));
 
 int main()
 {
+    loadMesh("objects/cylinder.obj");
+    
     auto window = GLInit();
     glEnable(GL_DEPTH_TEST);
 
