@@ -26,10 +26,14 @@ public:
 	float normal_speed;
 	float sensitivity = 100.0f;
 
-	Camera(int width, int height, glm::vec3 position);
+	float fov;
+	float near;
+	float far;
+
+	Camera(int width, int height, glm::vec3 position,float FOVdeg, float nearPlane, float farPlane);
 
 	// Updates and exports the camera matrix to the Vertex Shader
-	glm::mat4 Matrix(float FOVdeg, float nearPlane, float farPlane);
+	glm::mat4 Matrix();
 	// Handles camera inputs
 	void Inputs(GLFWwindow* window);
 

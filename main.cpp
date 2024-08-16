@@ -100,7 +100,7 @@ GLFWwindow* GLInit()
     return window;
 }
 
-Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0, 0, 2));
+Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0, 0, 2),45,0.1,100);
 
 int main()
 {
@@ -130,13 +130,13 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         camera.Inputs(window);
         shader.use();
-        shader.setMat4("camera_info", camera.Matrix(45.0f, 0.1f, 100.0f));
+        shader.setMat4("camera_info", camera.Matrix());
 
         
         vao.draw();
 
         shader_light.use();
-        shader_light.setMat4("camera_info", camera.Matrix(45.0f, 0.1f, 100.0f));
+        shader_light.setMat4("camera_info", camera.Matrix());
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model,glm::vec3(0,5,0));
         shader_light.setMat4("model",model);
