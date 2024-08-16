@@ -3,15 +3,14 @@
 #include <iostream>
 
 #include "VAO.h"
-#include "VBO.h"
-#include "EBO.h"
 #include "shaderClass.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "camera.h"
+#include <vector>
 
-GLfloat vertices[] =
+std::vector<float> vertices =
 { //     COORDINATES         /        COLORS      
     -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,
     -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,
@@ -21,7 +20,7 @@ GLfloat vertices[] =
 };
 
 // Indices for vertices order
-GLuint indices[] =
+std::vector<unsigned int> indices =
 {
     0, 1, 2,
     0, 2, 3,
@@ -64,36 +63,7 @@ GLFWwindow* GLInit() {
 
 Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0, 0, 2));
 
-GLuint vao, vbo, ebo;
 
-void depth()
-{
-    glCreateVertexArrays(1, &vao);
-    glCreateBuffers(1, &vbo);
-    glCreateBuffers(1, &ebo);
-
-    // 为 VBO 分配并填充数据
-    glNamedBufferData(vbo, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    // 为 EBO 分配并填充数据
-    glNamedBufferData(ebo, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // 设置顶点属性指针
-    // 位置属性
-    glVertexArrayVertexBuffer(vao, 0, vbo, 0, 6 * sizeof(GLfloat));
-    glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
-    glVertexArrayAttribBinding(vao, 0, 0);
-    glEnableVertexArrayAttrib(vao, 0);
-
-    // 颜色属性
-    glVertexArrayVertexBuffer(vao, 1, vbo, 3 * sizeof(GLfloat), 6 * sizeof(GLfloat));
-    glVertexArrayAttribFormat(vao, 1, 3, GL_FLOAT, GL_FALSE, 0);
-    glVertexArrayAttribBinding(vao, 1, 1);
-    glEnableVertexArrayAttrib(vao, 1);
-
-    // 绑定 EBO 到 VAO
-    glVertexArrayElementBuffer(vao, ebo);
-}
 
 int main()
 {
@@ -102,15 +72,16 @@ int main()
 
     while(!glfwWindowShouldClose(window))
     {
-        //glViewport(0, 0, 1600, 1600);
+        auto shader = Shader("shader/shader.vert","shader/shader.frag");
+        auto vao = VAO(vertices,indices);
+        
         processInput(window);
         glClearColor(0.5,0.5,0.8,1);
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         
+        shader.use();
         
-        depth();
-        glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, 0);
+        vao.draw();
         
         glfwPollEvents();
         glfwSwapBuffers(window);

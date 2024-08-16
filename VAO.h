@@ -1,20 +1,57 @@
 #pragma once
 
-#include "VBO.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <vector>
+
+using namespace std;
 
 class VAO
 {
+private:
+    GLuint vao;
+    GLuint ebo;
+    GLuint vbo;
+
+    size_t indices_size;
+
 public:
-	GLuint ID;
-	
-	VAO();
+    VAO(const vector<float>& vertices,const vector<unsigned int>& indices)
+    {
+        glCreateVertexArrays(1, &vao);
+        glCreateBuffers(1, &vbo);
+        glCreateBuffers(1, &ebo);
 
-	void LinkAttrib(VBO& VBO, GLuint layout, GLuint nComponent, GLenum type, size_t stride, void* offsite);
+        // 为 VBO 分配并填充数据
+        glNamedBufferData(vbo, sizeof(float)*vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
 
-	void Bind();
+        // 为 EBO 分配并填充数据
+        glNamedBufferData(ebo, sizeof(GLuint)*indices.size(), &indices[0], GL_DYNAMIC_DRAW);
 
-	void UnBind();
+        // 设置顶点属性指针
+        // 位置属性
+        glVertexArrayVertexBuffer(vao, 0, vbo, 0, 6 * sizeof(GLfloat));
+        glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
+        glVertexArrayAttribBinding(vao, 0, 0);
+        glEnableVertexArrayAttrib(vao, 0);
 
-	void Delete();
+        // 颜色属性
+        glVertexArrayVertexBuffer(vao, 1, vbo, 3 * sizeof(GLfloat), 6 * sizeof(GLfloat));
+        glVertexArrayAttribFormat(vao, 1, 3, GL_FLOAT, GL_FALSE, 0);
+        glVertexArrayAttribBinding(vao, 1, 1);
+        glEnableVertexArrayAttrib(vao, 1);
+
+        // 绑定 EBO 到 VAO
+        glVertexArrayElementBuffer(vao, ebo);
+
+        indices_size = indices.size();
+    }
+
+    void draw()
+    {
+        glBindVertexArray(vao);
+        glDrawElements(GL_TRIANGLES, indices_size , GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+    }
+    
 };
-
