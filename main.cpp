@@ -67,7 +67,7 @@ std::vector<unsigned int> lightIndices =
 
 
 std::vector<unsigned int> attribs = {3, 3, 2};
-std::vector<unsigned int> attribs2 = {3};
+std::vector<unsigned int> attribs2 = {3,3,2};
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -105,6 +105,9 @@ Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0, 0, 2));
 int main()
 {
     loadMesh("objects/cylinder.obj");
+
+    print(vertices_load.size());
+    print(indices_load.size());
     
     auto window = GLInit();
     glEnable(GL_DEPTH_TEST);
@@ -113,7 +116,7 @@ int main()
     auto vao = VAO(vertices, indices, attribs);
     auto texture = Texture("textures/squere.png");
 
-    auto vao_light = VAO(lightVertices,lightIndices,attribs2);
+    auto vao_light = VAO(vertices_load,indices_load,attribs2);
     auto shader_light = Shader(light_shaders);
     
     texture.Bind(0);
