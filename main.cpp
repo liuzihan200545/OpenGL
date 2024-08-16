@@ -63,23 +63,22 @@ GLFWwindow* GLInit() {
 
 Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0, 0, 2));
 
-
-
 int main()
 {
     auto window = GLInit();
     glEnable(GL_DEPTH_TEST);
 
+    auto shader = Shader("shader/camera.vert","shader/camera.frag");
+    auto vao = VAO(vertices,indices);
+
     while(!glfwWindowShouldClose(window))
     {
-        auto shader = Shader("shader/shader.vert","shader/shader.frag");
-        auto vao = VAO(vertices,indices);
-        
         processInput(window);
-        //glClearColor(0.5,0.5,0.8,1);
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        camera.Inputs(window);
         shader.use();
+        shader.setMat4("camera_info",camera.Matrix(45.0f,0.1f,100.0f));
         
         vao.draw();
         
@@ -94,7 +93,6 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 }
-
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {

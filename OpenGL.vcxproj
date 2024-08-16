@@ -163,6 +163,10 @@
   <ItemGroup>
     <Image Include="textures\squere.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="shader\camera.frag" />
+    <Content Include="shader\camera.vert" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
