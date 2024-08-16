@@ -10,6 +10,8 @@
 #include "camera.h"
 #include <vector>
 
+#define camera_shaders "shader/camera.vert","shader/camera.frag"
+
 std::vector<float> vertices =
 { //     COORDINATES         /        COLORS      
     -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,
@@ -29,8 +31,6 @@ std::vector<unsigned int> indices =
     2, 3, 4,
     3, 0, 4
 };
-
-
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
@@ -68,7 +68,7 @@ int main()
     auto window = GLInit();
     glEnable(GL_DEPTH_TEST);
 
-    auto shader = Shader("shader/camera.vert","shader/camera.frag");
+    auto shader = Shader(camera_shaders);
     auto vao = VAO(vertices,indices);
 
     while(!glfwWindowShouldClose(window))

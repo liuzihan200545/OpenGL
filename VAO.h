@@ -52,5 +52,12 @@ public:
         glDrawElements(GL_TRIANGLES, indices_size , GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }
+
+    ~VAO()
+    {
+        glDeleteVertexArrays(1, &vao);
+        glDeleteBuffers(1, &vbo);
+        glDeleteBuffers(1, &ebo);
+    }
     
 };
