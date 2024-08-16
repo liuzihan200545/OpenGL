@@ -15,7 +15,7 @@ private:
     size_t indices_size;
 
 public:
-    VAO(const vector<float>& vertices,const vector<unsigned int>& indices)
+    /*VAO(const vector<float>& vertices,const vector<unsigned int>& indices)
     {
         glCreateVertexArrays(1, &vao);
         glCreateBuffers(1, &vbo);
@@ -45,6 +45,40 @@ public:
         glVertexArrayAttribBinding(vao, 2, 2);
         glEnableVertexArrayAttrib(vao, 2);
 
+        // 绑定 EBO 到 VAO
+        glVertexArrayElementBuffer(vao, ebo);
+
+        indices_size = indices.size();
+    }*/
+
+    VAO(const vector<float>& vertices,const vector<unsigned int>& indices,vector<unsigned int> attribs)
+    {
+        glCreateVertexArrays(1, &vao);
+        glCreateBuffers(1, &vbo);
+        glCreateBuffers(1, &ebo);
+
+        // 为 VBO 分配并填充数据
+        glNamedBufferData(vbo, sizeof(float)*vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
+
+        // 为 EBO 分配并填充数据
+        glNamedBufferData(ebo, sizeof(GLuint)*indices.size(), &indices[0], GL_DYNAMIC_DRAW);
+
+        unsigned int stride = 0;
+        for(auto u : attribs)
+        {
+            stride += u;
+        }
+        unsigned int offsite = 0;
+        for(size_t i = 0;i < attribs.size();i++)
+        {
+            glVertexArrayVertexBuffer(vao, i, vbo, offsite * sizeof(GLfloat), stride * sizeof(GLfloat));
+            glVertexArrayAttribFormat(vao, i, attribs[i], GL_FLOAT, GL_FALSE, 0);
+            glVertexArrayAttribBinding(vao, i, i);
+            glEnableVertexArrayAttrib(vao, i);
+    
+            offsite += attribs[i];
+        }
+        
         // 绑定 EBO 到 VAO
         glVertexArrayElementBuffer(vao, ebo);
 
