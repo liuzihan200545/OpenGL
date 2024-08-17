@@ -104,75 +104,6 @@ GLFWwindow* GLInit()
 
 Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0, 0, 2),45,0.1,100);
 
-/*int main()
-{
-    camera.setCameraSpeed(0.01f);
-    
-
-    print(vertices_load.size());
-    print(indices_load.size());
-    
-    auto window = GLInit();
-    glEnable(GL_DEPTH_TEST);
-
-    loadMesh("objects/cylinder.obj");
-    auto texture1 = load_texture("objects/monkey.obj");
-    texture1.Bind(0);
-
-    auto shader = Shader(texture_shaders);
-    auto vao = VAO(vertices, indices, attribs);
-    auto texture = Texture("textures/squere.png");
-
-    auto vao_light = VAO(vertices_load,indices_load,attribs2);
-    auto shader_light = Shader(light_shaders);
-    
-    //texture.Bind(0);
-    shader.setInt("t", 0);
-
-    Model mod = Model();
-
-    mod.loadIn("objects/monkey.obj");
-
-    while (!glfwWindowShouldClose(window))
-    {
-        processInput(window);
-        
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        camera.Inputs(window);
-        shader.use();
-        shader.setMat4("camera_info", camera.Matrix());
-
-        
-        vao.draw();
-
-        /*Mesh mesh = Mesh();
-        loadMesh("objects/cube.obj",mesh);
-        mesh.loadData();#1#
-
-        
-
-        //shader_light.use();
-        //shader_light.setMat4("camera_info", camera.Matrix());
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model,glm::vec3(0,5,0));
-        //shader_light.setMat4("model",model);
-        //vao_light.draw();
-        
-        //mesh.draw();
-
-        
-        mod.meshes[0].draw();
-        mod.meshes[1].draw();
-        mod.meshes[2].draw();
-
-        
-
-        glfwPollEvents();
-        glfwSwapBuffers(window);
-    }
-    glfwTerminate();
-}*/
-
 int main()
 {
     camera.setCameraSpeed(0.01f);
@@ -180,7 +111,7 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     auto model = md::Model();
-    model.loadin("objects/monkey.obj");
+    model.loadin("objects/vepley.obj");
 
     auto shader = Shader(texture_shaders);
 
@@ -198,8 +129,6 @@ int main()
         shader.setInt("t", 0);
         
         model.draw();
-        
-        
         
         glfwPollEvents();
         glfwSwapBuffers(window);

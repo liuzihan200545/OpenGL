@@ -173,6 +173,8 @@
   <ItemGroup>
     <Content Include="objects\cylinder.mtl" />
     <Content Include="objects\cylinder.obj" />
+    <Content Include="objects\indoor plant_02.mtl" />
+    <Content Include="objects\indoor plant_02.obj" />
     <Content Include="objects\vepley.obj" />
     <Content Include="shader\camera.frag" />
     <Content Include="shader\camera.vert" />
