@@ -133,6 +133,7 @@ Texture load_texture(const char* pFile)
         //ÌùÍ¼Â·¾¶
         std::string dic = std::string(str.C_Str());
         auto texture = Texture(dic.c_str());
+        texture.LoadTexture();
         return texture;   
     }
 }

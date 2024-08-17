@@ -111,14 +111,14 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     auto model = md::Model();
-    model.loadin("objects/vepley.obj");
+    model.loadin("objects/nanosuit.obj");
 
     auto shader = Shader(texture_shaders);
 
-    auto texture = Texture("textures/squere.png");
-
-    texture.Bind(0);
-    
+    //auto texture = Texture("box.png");
+    /*auto texture1 = model.meshes[0].mat.diffuse_texture;
+    texture1.Bind(1);*/
+    shader.setInt("t", 1);
     while(!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -126,9 +126,9 @@ int main()
         camera.Inputs(window);
         shader.use();
         shader.setMat4("camera_info", camera.Matrix());
-        shader.setInt("t", 0);
         
-        model.draw();
+        
+        model.draw(shader);
         
         glfwPollEvents();
         glfwSwapBuffers(window);

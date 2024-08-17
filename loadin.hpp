@@ -20,7 +20,7 @@ namespace md
     {
         unsigned int size;
         unsigned int offsite;
-        //Material mat;
+        Material mat;
     };
 
     class Model
@@ -34,15 +34,7 @@ namespace md
 
         void loadin(const char * pFile);
 
-        void draw()
-        {
-            glBindVertexArray(vao);
-            for(auto& u:meshes)
-            {
-                glDrawElements(GL_TRIANGLES, u.size , GL_UNSIGNED_INT,(void*)(u.offsite*sizeof(unsigned int)));
-            }
-            glBindVertexArray(0);
-        }
+        void draw(Shader& shader);
 
     private:
 
@@ -115,7 +107,26 @@ namespace md
                     indices.push_back(m_faces[j].mIndices[k]+offsite_vertice);
                 }
             }
-            Mesh _mesh {meshes[i]->mNumFaces*3,offsite_indice};
+            
+            //this->meshes.push_back(_mesh);
+            /*offsite_indice += meshes[i]->mNumFaces*3;
+            offsite_vertice += meshes[i]->mNumVertices;*/
+            
+            //load the textures.
+            auto mesh = meshes[i];
+            aiString str;
+            aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+            str = "";
+            //material->GetTexture(aiTextureType_DIFFUSE, i, &str);
+            material->GetTexture(aiTextureType_DIFFUSE,0,&str);
+            //贴图路径
+            std::string dic = std::string(str.C_Str());
+            if(str.C_Str() == "")
+            {
+                utils::printt("failed:{}",dic);
+            }
+            auto t = Texture(dic.c_str());
+            Mesh _mesh {meshes[i]->mNumFaces*3,offsite_indice,t};
             this->meshes.push_back(_mesh);
             offsite_indice += meshes[i]->mNumFaces*3;
             offsite_vertice += meshes[i]->mNumVertices;
@@ -153,7 +164,29 @@ namespace md
         
         // 绑定 EBO 到 VAO
         glVertexArrayElementBuffer(vao, ebo);
+
+        for(auto& u :this->meshes)
+        {
+            u.mat.diffuse_texture.LoadTexture();
+        }
         
+    }
+
+    inline void Model::draw(Shader& shader)
+    {
+        glBindVertexArray(vao);
+        for(auto& u:meshes)
+        {
+            shader.use();
+            shader.setInt("t",1);
+            //说明没有正确加载纹理的内容
+            //u.mat.diffuse_texture.LoadTexture();
+            u.mat.diffuse_texture.Bind(1);
+            glDrawElements(GL_TRIANGLES, u.size , GL_UNSIGNED_INT,(void*)(u.offsite*sizeof(unsigned int)));
+            u.mat.diffuse_texture.Unbind();
+            
+        }
+        glBindVertexArray(0);
     }
 }
 

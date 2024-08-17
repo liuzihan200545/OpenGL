@@ -23,7 +23,7 @@ public:
 		glDeleteTextures(1, &m_RendererID);
 	}
 
-	void Bind(unsigned int slot = 0) const
+	void Bind(unsigned int slot) const
 	{
 		glBindTextureUnit(slot, m_RendererID);
 	}
@@ -62,7 +62,8 @@ public:
 		}
 		else
 		{
-			std::cout << "Failed to load texture" << '\n';
+			const char* error = stbi_failure_reason();
+			std::cout << "Failed to load texture: " << error << '\n';
 		}
 	}
 
