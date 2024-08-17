@@ -128,6 +128,10 @@ int main()
     //texture.Bind(0);
     shader.setInt("t", 0);
 
+    Model mod = Model();
+
+    mod.loadIn("objects/cube.obj");
+
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
@@ -140,12 +144,11 @@ int main()
         
         vao.draw();
 
-        Mesh mesh = Mesh();
+        /*Mesh mesh = Mesh();
         loadMesh("objects/cube.obj",mesh);
-        mesh.loadData();
+        mesh.loadData();*/
 
-        /*auto mesh = Mesh(vao);
-        mesh.Draw();*/
+        
 
         //shader_light.use();
         //shader_light.setMat4("camera_info", camera.Matrix());
@@ -153,7 +156,12 @@ int main()
         model = glm::translate(model,glm::vec3(0,5,0));
         //shader_light.setMat4("model",model);
         //vao_light.draw();
-        mesh.draw();
+        
+        //mesh.draw();
+
+        
+        mod.meshes[0].draw();
+        
 
         glfwPollEvents();
         glfwSwapBuffers(window);
