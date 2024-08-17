@@ -11,6 +11,7 @@
 #include "camera.h"
 #include <vector>
 #include "load.h"
+#include "structs.h"
 
 #define camera_shaders "shader/camera.vert","shader/camera.frag"
 #define texture_shaders "shader/texture.vert","shader/texture.frag"
@@ -114,7 +115,7 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     loadMesh("objects/cylinder.obj");
-    auto texture1 = load_texture("objects/cylinder.obj");
+    auto texture1 = load_texture("objects/cube.obj");
     texture1.Bind(0);
 
     auto shader = Shader(texture_shaders);
@@ -139,12 +140,20 @@ int main()
         
         vao.draw();
 
+        Mesh mesh = Mesh();
+        loadMesh("objects/cube.obj",mesh);
+        mesh.loadData();
+
+        /*auto mesh = Mesh(vao);
+        mesh.Draw();*/
+
         //shader_light.use();
         //shader_light.setMat4("camera_info", camera.Matrix());
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model,glm::vec3(0,5,0));
         //shader_light.setMat4("model",model);
-        vao_light.draw();
+        //vao_light.draw();
+        mesh.draw();
 
         glfwPollEvents();
         glfwSwapBuffers(window);

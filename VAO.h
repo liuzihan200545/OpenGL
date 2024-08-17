@@ -85,6 +85,13 @@ public:
         indices_size = indices.size();
     }
 
+    VAO& operator=(const VAO& _vao)
+    {
+        this->vao = _vao.vao;
+        this->ebo = _vao.ebo;
+        this->vbo = _vao.vbo;
+    }
+
     void draw() const 
     {
         glBindVertexArray(vao);
