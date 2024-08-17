@@ -152,6 +152,7 @@
     <ClInclude Include="haed.h" />
     <ClInclude Include="headers.hpp" />
     <ClInclude Include="load.h" />
+    <ClInclude Include="loadin.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="shaderClass.h" />
     <ClInclude Include="stb_image.h" />

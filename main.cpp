@@ -11,7 +11,8 @@
 #include "camera.h"
 #include <vector>
 #include "load.h"
-#include "structs.h"
+//#include "structs.h"
+#include "loadin.hpp"
 
 #define camera_shaders "shader/camera.vert","shader/camera.frag"
 #define texture_shaders "shader/texture.vert","shader/texture.frag"
@@ -103,7 +104,7 @@ GLFWwindow* GLInit()
 
 Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0, 0, 2),45,0.1,100);
 
-int main()
+/*int main()
 {
     camera.setCameraSpeed(0.01f);
     
@@ -115,7 +116,7 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     loadMesh("objects/cylinder.obj");
-    auto texture1 = load_texture("objects/cube.obj");
+    auto texture1 = load_texture("objects/monkey.obj");
     texture1.Bind(0);
 
     auto shader = Shader(texture_shaders);
@@ -130,7 +131,7 @@ int main()
 
     Model mod = Model();
 
-    mod.loadIn("objects/cube.obj");
+    mod.loadIn("objects/monkey.obj");
 
     while (!glfwWindowShouldClose(window))
     {
@@ -146,7 +147,7 @@ int main()
 
         /*Mesh mesh = Mesh();
         loadMesh("objects/cube.obj",mesh);
-        mesh.loadData();*/
+        mesh.loadData();#1#
 
         
 
@@ -161,8 +162,45 @@ int main()
 
         
         mod.meshes[0].draw();
+        mod.meshes[1].draw();
+        mod.meshes[2].draw();
+
         
 
+        glfwPollEvents();
+        glfwSwapBuffers(window);
+    }
+    glfwTerminate();
+}*/
+
+int main()
+{
+    camera.setCameraSpeed(0.01f);
+    auto window = GLInit();
+    glEnable(GL_DEPTH_TEST);
+
+    auto model = md::Model();
+    model.loadin("objects/monkey.obj");
+
+    auto shader = Shader(texture_shaders);
+
+    auto texture = Texture("textures/squere.png");
+
+    texture.Bind(0);
+    
+    while(!glfwWindowShouldClose(window))
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        processInput(window);
+        camera.Inputs(window);
+        shader.use();
+        shader.setMat4("camera_info", camera.Matrix());
+        shader.setInt("t", 0);
+        
+        model.draw();
+        
+        
+        
         glfwPollEvents();
         glfwSwapBuffers(window);
     }
